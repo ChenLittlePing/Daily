@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:daily/bean/tcitem.dart';
+import 'package:daily/bean/tc_item.dart';
 import 'package:flutter/material.dart';
 
 class PhotoPPT extends StatefulWidget {
@@ -35,7 +35,7 @@ class PhotoPPTState extends State<PhotoPPT> {
                 child: new CachedNetworkImage(
                   imageUrl: widget.photos[i].url,
                   placeholder: Container(
-                    child: Image.asset("assets/ic-pic-loading.png"),
+                    child: Image.asset("images/ic-pic-loading.png"),
                   ),
                   fit: BoxFit.fitWidth,
                   errorWidget: new Icon(Icons.error),

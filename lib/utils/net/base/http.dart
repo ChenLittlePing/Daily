@@ -1,4 +1,4 @@
-import 'package:daily/utils/net/base/ResponseCB.dart';
+import 'package:daily/utils/net/base/response_cb.dart';
 import 'package:dio/dio.dart';
 
 ///Http请求基础类
@@ -29,7 +29,7 @@ abstract class Http {
 
   }
 
-  void get(String endpoint, var params, success, fail) async {
+  void get(String endpoint, var params, Success success, Fail fail) async {
     try {
       Response response = await getDio().get(endpoint, data: params);
       handleData(success, response.data);
@@ -38,30 +38,30 @@ abstract class Http {
     }
   }
 
-  void post(String endpoint, var data, ResponseCB rcb) async {
+  void post(String endpoint, var data, Success success, Fail fail) async {
     try {
       Response response = await getDio().post(endpoint, data: data);
-      handleData(rcb, response.data);
+      handleData(success, response.data);
     } on DioError catch(e) {
-      handleError(rcb, e);
+      handleError(fail, e);
     }
   }
 
-  void getString(String endpoint, ResponseCB rcb) async {
+  void getString(String endpoint, Success success, Fail fail) async {
     try {
       Response response = await getDio().get(endpoint);
-      handleData(rcb, response.data);
+      handleData(success, response.data);
     } on DioError catch(e) {
-      handleError(rcb, e);
+      handleError(fail, e);
     }
   }
 
-  void postString(String endpoint, ResponseCB rcb) async {
+  void postString(String endpoint, Success success, Fail fail) async {
     try {
       Response response = await getDio().post(endpoint);
-      handleData(rcb, response.data);
+      handleData(success, response.data);
     } on DioError catch(e) {
-      handleError(rcb, e);
+      handleError(fail, e);
     }
   }
 

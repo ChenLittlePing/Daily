@@ -3,13 +3,13 @@ import 'package:dio/dio.dart';
 
 class TCRequest extends Http {
 
-  static TCRequest request;
+  static TCRequest _request;
 
   static TCRequest obtain() {
-    if (request == null) {
-      request = new TCRequest();
+    if (_request == null) {
+      _request = new TCRequest();
     }
-    return request;
+    return _request;
   }
   
   @override

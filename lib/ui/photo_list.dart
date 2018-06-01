@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:daily/bean/tcitem.dart';
-import 'package:daily/ui/photoppt.dart';
+import 'package:daily/bean/tc_item.dart';
+import 'package:daily/ui/photo_ppt.dart';
 import 'package:flutter/material.dart';
 
 class PhotoList extends StatefulWidget {
@@ -23,7 +23,7 @@ class PhotoListState extends State<PhotoList> {
   Widget build(BuildContext context) {
     return new Scaffold(
         appBar: new AppBar(
-          title: new Text("图片"),
+          title: new Text(widget.photos[0].title != null? widget.photos[0].title : "图片列表"),
           centerTitle: true,
         ),
         body: new GridView.count(
@@ -41,7 +41,7 @@ class PhotoListState extends State<PhotoList> {
                     child: CachedNetworkImage(
                       imageUrl: widget.photos[index].url,
                       placeholder: Container(
-                        child: Image.asset("assets/ic-pic-loading.png"),
+                        child: Image.asset("images/ic-pic-loading.png"),
                       ),
                       fit: BoxFit.cover,
                       errorWidget: new Icon(Icons.error),

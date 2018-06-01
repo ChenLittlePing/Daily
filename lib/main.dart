@@ -1,9 +1,10 @@
 import 'dart:async';
 
-import 'package:daily/bean/tcitem.dart';
-import 'package:daily/ui/photoppt.dart';
-import 'package:daily/ui/photolist.dart';
-import 'package:daily/utils/net/tcSev/TCApi.dart';
+import 'package:daily/bean/tc_item.dart';
+import 'package:daily/ui/article_list.dart';
+import 'package:daily/ui/photo_ppt.dart';
+import 'package:daily/ui/photo_list.dart';
+import 'package:daily/utils/net/tcSev/tc_api.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -37,6 +38,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int page = 0;
   int count = 0;
   var items = Map<int, List<TCItem>>();
 
@@ -50,6 +52,34 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+        drawer: new Drawer(
+          child: Column(
+            children: <Widget>[
+              Container(
+                height: 150.0,
+                color: Colors.blue,
+              ),
+              Divider(color: Colors.transparent),
+              ListTile(
+                title: Text("每日图片", style: TextStyle(fontSize: 16.0, color: _color(0))),
+                leading: Icon(Icons.picture_in_picture_alt, color: _color(0)),
+                onTap: _clickPicList,
+              ),
+              Divider(),
+              ListTile(
+                title: Text("每日文章", style: TextStyle(fontSize: 16.0, color: _color(1))),
+                leading: Icon(Icons.chrome_reader_mode, color: _color(1)),
+                onTap: _clickArticleList,
+              ),
+              Divider(),
+              ListTile(
+                title: Text("关于", style: TextStyle(fontSize: 16.0, color: _color(2))),
+                leading: Icon(Icons.account_balance, color: _color(2)),
+                onTap: _clickAbout,
+              ),
+            ],
+          ),
+        ),
         appBar: new AppBar(
           title: new Text("热门图片"),
           centerTitle: true,
@@ -67,7 +97,7 @@ class _HomePageState extends State<HomePage> {
             children: List.generate(count, (index) {
               return GestureDetector(
                   onTap: () {
-                    _next(index);
+                    _clickPic(index);
                   },
                   child: Hero(
                     tag: "tag-" + index.toString() + "-0",
@@ -79,7 +109,7 @@ class _HomePageState extends State<HomePage> {
                             new CachedNetworkImage(
                               imageUrl: items[index][0].url,
                               placeholder: Container(
-                                child: Image.asset("assets/ic-pic-loading.png"),
+                                child: Image.asset("images/ic-pic-loading.png"),
                               ),
                               fit: BoxFit.cover,
                               errorWidget: new Icon(Icons.error),
@@ -152,15 +182,36 @@ class _HomePageState extends State<HomePage> {
     print(data);
   }
 
-  void _next(index) {
+  void _clickPic(index) {
     if (items[index].length > 1) {
-      Navigator.of(context).push(new MaterialPageRoute(builder: (context) {
-        return new PhotoList(items[index], index);
-      }));
+      _navTo(PhotoList(items[index], index));
     } else {
-      Navigator.of(context).push(new MaterialPageRoute(builder: (context) {
-        return new PhotoPPT(items[index], index, 0);
-      }));
+      _navTo(new PhotoPPT(items[index], index, 0));
     }
+  }
+
+  void _clickPicList() {
+    if (page != 0) {
+      Navigator.pop(context);
+    }
+  }
+
+  void _clickArticleList() {
+    if (page != 1) {
+      _navTo(ArticleList());
+    }
+  }
+
+  void _clickAbout() {
+  }
+
+  void _navTo(Widget widget) {
+    Navigator.of(context).push(new MaterialPageRoute(builder: (context) {
+      return widget;
+    }));
+  }
+
+  Color _color(page) {
+    return page == this.page? Colors.blue : null;
   }
 }
