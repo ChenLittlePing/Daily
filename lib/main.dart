@@ -1,7 +1,8 @@
 import 'dart:async';
 
 import 'package:daily/bean/tc_item.dart';
-import 'package:daily/net/tcSev/tc_api.dart';
+import 'package:daily/net/api_tc/tc_api.dart';
+import 'package:daily/ui/about/about.dart';
 import 'package:daily/ui/article/article_page.dart';
 import 'package:daily/ui/photo/photo_ppt.dart';
 import 'package:daily/ui/photo/photo_list.dart';
@@ -105,7 +106,8 @@ class _HomePageState extends State<_HomePage> {
             itemCount: count,
             itemBuilder: (context, index) {
               scaffoldContext = context;
-              if (items.length > 0 && index >= items.length - 1) {// 自动加载更多
+              if (items.length > 0 && index >= items.length - 1) {
+                // 自动加载更多
                 _getNews(curPage, nextId);
               }
               return GestureDetector(
@@ -208,8 +210,9 @@ class _HomePageState extends State<_HomePage> {
 
   void _getNewFail(error) {
     if (scaffoldContext != null) {
-      Scaffold.of(scaffoldContext).showSnackBar(
-          new SnackBar(content: new Text(error)));
+      Scaffold
+          .of(scaffoldContext)
+          .showSnackBar(new SnackBar(content: new Text(error)));
     }
   }
 
@@ -230,7 +233,10 @@ class _HomePageState extends State<_HomePage> {
     _navTo(ArticlePage());
   }
 
-  void _clickAbout() {}
+  void _clickAbout() {
+    Navigator.pop(context);
+    _navTo(About());
+  }
 
   void _navTo(Widget widget) {
     Navigator.of(context).push(new MaterialPageRoute(builder: (context) {

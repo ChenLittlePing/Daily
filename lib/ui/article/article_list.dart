@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:daily/bean/article.dart';
-import 'package:daily/net/articleSev/article_api.dart';
+import 'package:daily/net/api_article/article_api.dart';
 import 'package:daily/ui/article/article_detail.dart';
 import 'package:flutter/material.dart';
 

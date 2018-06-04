@@ -1,6 +1,6 @@
 
 
-import 'package:daily/net/articleSev/article_request.dart';
+import 'package:daily/net/api_article/article_request.dart';
 import 'package:daily/net/base/response_cb.dart';
 
 class ArticleApi {

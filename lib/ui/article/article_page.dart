@@ -1,5 +1,5 @@
 import 'package:daily/bean/article.dart';
-import 'package:daily/net/articleSev/article_api.dart';
+import 'package:daily/net/api_article/article_api.dart';
 import 'package:daily/utils/date.dart';
 import 'package:flutter/material.dart';
 
