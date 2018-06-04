@@ -1,6 +1,5 @@
 
-import 'package:daily/utils/net/base/response_cb.dart';
-import 'package:daily/utils/net/tcSev/tc_request.dart';
+import 'package:daily/net/tcSev/tc_request.dart';
 
 class TCApi {
   void getNew(int page, String postId, Function success, Function fail) {

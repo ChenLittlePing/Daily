@@ -1,4 +1,4 @@
-import 'package:daily/utils/net/base/http.dart';
+import 'package:daily/net/base/http.dart';
 import 'package:dio/dio.dart';
 
 class TCRequest extends Http {

@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:daily/bean/tc_item.dart';
-import 'package:daily/ui/photo_ppt.dart';
+import 'package:daily/ui/photo/photo_ppt.dart';
 import 'package:flutter/material.dart';
 
 class PhotoList extends StatefulWidget {

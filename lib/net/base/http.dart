@@ -1,9 +1,9 @@
-import 'package:daily/utils/net/base/response_cb.dart';
+import 'package:daily/net/base/response_cb.dart';
 import 'package:dio/dio.dart';
 
 ///Http请求基础类
 ///<p>配置基本的请求信息，以及基础的请求功能方法
-///<p>正在的请求类需要继承该类，并实现{initOption}方法，进行参数配置
+///<p>正在的请求类需要继承该类，并实现[initOption]方法，进行参数配置
 abstract class Http {
 
   static Options _options = Options(
@@ -73,11 +73,8 @@ abstract class Http {
 
   void handleError(cb, DioError e) {
     if (cb == null || !(cb is Function)) return;
-    print("error:" + e.type.toString());
     if(e.response != null) {
-      print(e.response.data);
-      print(e.response.headers);
-      print(e.response.request);
+      cb("服务器出错");
     } else {
       switch (e.type) {
         case DioErrorType.DEFAULT:

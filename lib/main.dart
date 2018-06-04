@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:daily/bean/tc_item.dart';
-import 'package:daily/ui/article_list.dart';
-import 'package:daily/ui/photo_ppt.dart';
-import 'package:daily/ui/photo_list.dart';
-import 'package:daily/utils/net/tcSev/tc_api.dart';
+import 'package:daily/net/tcSev/tc_api.dart';
+import 'package:daily/ui/article/article_page.dart';
+import 'package:daily/ui/photo/photo_ppt.dart';
+import 'package:daily/ui/photo/photo_list.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -42,6 +42,7 @@ class _HomePageState extends State<_HomePage> {
   var items = Map<int, List<TCItem>>();
   String nextId;
   var curPage = 0;
+  var scaffoldContext;
 
   @override
   void initState() {
@@ -58,7 +59,7 @@ class _HomePageState extends State<_HomePage> {
           children: <Widget>[
             Container(
               height: 150.0,
-              padding: EdgeInsets.all(12.0),
+              padding: EdgeInsets.fromLTRB(12.0, 32.0, 12.0, 12.0),
               color: Colors.blue,
               alignment: Alignment.center,
               child: Text(
@@ -103,7 +104,8 @@ class _HomePageState extends State<_HomePage> {
             physics: AlwaysScrollableScrollPhysics(),
             itemCount: count,
             itemBuilder: (context, index) {
-              if (items.length > 0 && index >= items.length - 1) {
+              scaffoldContext = context;
+              if (items.length > 0 && index >= items.length - 1) {// 自动加载更多
                 _getNews(curPage, nextId);
               }
               return GestureDetector(
@@ -156,13 +158,13 @@ class _HomePageState extends State<_HomePage> {
   }
 
   Future<Null> _getNews(page, postId) async {
+    if (curPage > 1 && postId == null) return;
+    this.curPage = page;
     TCApi().getNew(page, postId, _getNewSuccess, _getNewFail);
     return null;
   }
 
   void _getNewSuccess(data) {
-    var map = Map<int, List<TCItem>>();
-    int count = this.count;
     if (curPage == 1) {
       setState(() {
         this.items.clear();
@@ -170,6 +172,8 @@ class _HomePageState extends State<_HomePage> {
         this.nextId = null;
       });
     }
+    var map = Map<int, List<TCItem>>();
+    int count = this.count;
     curPage++;
     for (var d in data["feedList"]) {
       if (d != []) {
@@ -197,14 +201,16 @@ class _HomePageState extends State<_HomePage> {
       this.count = count;
       if (data["feedList"].length > 0) {
         var list = data["feedList"];
-        print(list[list.length - 1]);
         this.nextId = list[list.length - 1]["post_id"].toString();
       }
     });
   }
 
   void _getNewFail(error) {
-    Scaffold.of(context).showSnackBar(new SnackBar(content: new Text(error)));
+    if (scaffoldContext != null) {
+      Scaffold.of(scaffoldContext).showSnackBar(
+          new SnackBar(content: new Text(error)));
+    }
   }
 
   void _clickPic(index) {
@@ -221,7 +227,7 @@ class _HomePageState extends State<_HomePage> {
 
   void _clickArticleList() {
     Navigator.pop(context);
-    _navTo(ArticleList());
+    _navTo(ArticlePage());
   }
 
   void _clickAbout() {}

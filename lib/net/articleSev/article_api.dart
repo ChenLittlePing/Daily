@@ -1,6 +1,7 @@
 
-import 'package:daily/utils/net/articleSev/article_request.dart';
-import 'package:daily/utils/net/base/response_cb.dart';
+
+import 'package:daily/net/articleSev/article_request.dart';
+import 'package:daily/net/base/response_cb.dart';
 
 class ArticleApi {
   void getArticle(date, Success success, Fail fail) {
