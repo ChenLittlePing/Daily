@@ -7,7 +7,7 @@ class TCApi {
     var params = {
       "page": page,
       "post_id": postId,
-      "type": page == 0? "refresh" : "loadmore"
+      "type": page == 1? "refresh" : "loadmore"
     };
     TCRequest request = TCRequest.obtain();
     request.get("/feed-app", params, success, fail);

@@ -69,7 +69,7 @@ class ArticleListState extends State<ArticleList> {
   }
 
   void _getListData() {
-    ArticleApi().getArticle("20180501", (data) {
+    ArticleApi().getArticle(null, (data) {
       var d = data["data"];
       var item = Article(d["title"], d["author"], d["digest"], d["content"]);
       setState(() {

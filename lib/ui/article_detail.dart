@@ -36,7 +36,7 @@ class ArticleDetailState extends State<ArticleDetail> {
               } else if (i == 1) {
                 return Container(
                     margin: EdgeInsets.all(8.0),
-                    child: Text("文/" + widget.article.author,
+                    child: Text("文 / " + widget.article.author,
                         style: TextStyle(
                             height: 1.2,
                             fontSize: 16.0,
