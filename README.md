@@ -1,8 +1,4 @@
-# daily
+# Daily/每日图文
+A Flutter App for looking up photos and articles.
 
-A application to look up photo and article
-
-## Getting Started
-
-For help getting started with Flutter, view our online
-[documentation](https://flutter.io/).
+一个Flutter构建的跨平台App，可查看美图和美文。
