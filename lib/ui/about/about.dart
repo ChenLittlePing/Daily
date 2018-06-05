@@ -1,3 +1,4 @@
+import 'package:daily/ui/about/web.dart';
 import 'package:flutter/material.dart';
 
 class About extends StatelessWidget {
@@ -37,12 +38,24 @@ class About extends StatelessWidget {
                 Divider(
                   color: Colors.blue,
                 ),
-                Container(
-                    margin: EdgeInsets.all(8.0),
-                    child: Text(
-                        "Api来自：\nhttps://github.com/ChenLittlePing/-Api",
-                        style: TextStyle(
-                            fontSize: 15.0, height: 1.5, letterSpacing: 1.2))),
+                GestureDetector(
+                    onTap: () {
+                      Navigator
+                          .of(context)
+                          .push(new MaterialPageRoute(builder: (context) {
+                        return new Web("https://github.com/ChenLittlePing/-Api");
+                      }));
+                    },
+                    child: Container(
+                        margin: EdgeInsets.all(8.0),
+                        child: Text(
+                            "Api来自：\nhttps://github.com/ChenLittlePing/-Api",
+                            style: TextStyle(
+                                fontSize: 15.0,
+                                height: 1.5,
+                                letterSpacing: 1.2,
+                                color: Colors.blue,
+                                decoration: TextDecoration.underline)))),
                 Divider(
                   color: Colors.blue,
                 ),
@@ -61,6 +74,28 @@ class About extends StatelessWidget {
                         "使用框架：\n网络框架dio、图片显示缓存框架cached_network_image、日期格式化工具intl",
                         style: TextStyle(
                             fontSize: 15.0, height: 1.5, letterSpacing: 1.2))),
+                Divider(
+                  color: Colors.blue,
+                ),
+                GestureDetector(
+                    onTap: () {
+                      Navigator
+                          .of(context)
+                          .push(new MaterialPageRoute(builder: (context) {
+                        return new Web("https://github.com/ChenLittlePing/Daily");
+                      }));
+                    },
+                    child: Container(
+                        margin: EdgeInsets.all(8.0),
+                        child: Text(
+                            "项目地址：\nhttps://github.com/ChenLittlePing/Daily"
+                            "\n喜欢就给个Star吧～",
+                            style: TextStyle(
+                                fontSize: 15.0,
+                                height: 1.5,
+                                letterSpacing: 1.2,
+                                color: Colors.blue,
+                                decoration: TextDecoration.underline)))),
                 Divider(
                   color: Colors.blue,
                 ),
