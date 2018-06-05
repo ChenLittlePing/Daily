@@ -40,69 +40,85 @@ class About extends StatelessWidget {
                 ),
                 GestureDetector(
                     onTap: () {
-                      Navigator
-                          .of(context)
-                          .push(new MaterialPageRoute(builder: (context) {
-                        return new Web("https://github.com/ChenLittlePing/-Api");
-                      }));
+                      _navToWeb(context, "项目地址",
+                          "https://github.com/ChenLittlePing/Daily");
                     },
                     child: Container(
                         margin: EdgeInsets.all(8.0),
-                        child: Text(
-                            "Api来自：\nhttps://github.com/ChenLittlePing/-Api",
-                            style: TextStyle(
-                                fontSize: 15.0,
-                                height: 1.5,
-                                letterSpacing: 1.2,
-                                color: Colors.blue,
-                                decoration: TextDecoration.underline)))),
-                Divider(
-                  color: Colors.blue,
-                ),
-                Container(
-                    margin: EdgeInsets.all(8.0),
-                    child: Text(
-                        "使用组件：\nScaffold、Container、Center、ListView、GridView、PageView、Image、Text等等",
-                        style: TextStyle(
-                            fontSize: 15.0, height: 1.5, letterSpacing: 1.2))),
-                Divider(
-                  color: Colors.blue,
-                ),
-                Container(
-                    margin: EdgeInsets.all(8.0),
-                    child: Text(
-                        "使用框架：\n网络框架dio、图片显示缓存框架cached_network_image、日期格式化工具intl",
-                        style: TextStyle(
-                            fontSize: 15.0, height: 1.5, letterSpacing: 1.2))),
+                        child: RichText(
+                            text: TextSpan(children: <TextSpan>[
+                          TextSpan(
+                              text: "项目地址(喜欢就给个Star吧😊)：\n",
+                              style: TextStyle(
+                                  fontSize: 15.0,
+                                  height: 1.5,
+                                  color: Colors.black87,
+                                  letterSpacing: 1.2)),
+                          TextSpan(
+                              text: "https://github.com/ChenLittlePing/Daily",
+                              style: TextStyle(
+                                  fontSize: 15.0,
+                                  height: 1.5,
+                                  letterSpacing: 1.2,
+                                  color: Colors.blue,
+                                  decoration: TextDecoration.underline))
+                        ])))),
                 Divider(
                   color: Colors.blue,
                 ),
                 GestureDetector(
                     onTap: () {
-                      Navigator
-                          .of(context)
-                          .push(new MaterialPageRoute(builder: (context) {
-                        return new Web("https://github.com/ChenLittlePing/Daily");
-                      }));
+                      _navToWeb(context, "相关API",
+                          "https://github.com/ChenLittlePing/-Api");
                     },
                     child: Container(
                         margin: EdgeInsets.all(8.0),
-                        child: Text(
-                            "项目地址：\nhttps://github.com/ChenLittlePing/Daily"
-                            "\n喜欢就给个Star吧～",
-                            style: TextStyle(
-                                fontSize: 15.0,
-                                height: 1.5,
-                                letterSpacing: 1.2,
-                                color: Colors.blue,
-                                decoration: TextDecoration.underline)))),
+                        child: RichText(
+                            text: TextSpan(children: <TextSpan>[
+                          TextSpan(
+                              text: "Api来自：\n",
+                              style: TextStyle(
+                                  fontSize: 15.0,
+                                  height: 1.5,
+                                  color: Colors.black87,
+                                  letterSpacing: 1.2)),
+                          TextSpan(
+                              text: "https://github.com/ChenLittlePing/-Api",
+                              style: TextStyle(
+                                  fontSize: 15.0,
+                                  height: 1.5,
+                                  letterSpacing: 1.2,
+                                  color: Colors.blue,
+                                  decoration: TextDecoration.underline))
+                        ])))),
+                Divider(
+                  color: Colors.blue,
+                ),
+                Container(
+                    margin: EdgeInsets.all(8.0),
+                    child: Text(
+                        "使用组件：\nScaffold、Container、Center、ListView、"
+                        "GridView、PageView、Image、Text、RichText等等",
+                        style: TextStyle(
+                            fontSize: 15.0, height: 1.5, letterSpacing: 1.2))),
+                Divider(
+                  color: Colors.blue,
+                ),
+                Container(
+                    margin: EdgeInsets.all(8.0),
+                    child: Text(
+                        "使用框架：\n- 网络框架dio\n- 图片显示缓存框架cached_network_image\n"
+                        "- 日期格式化工具int\n- WebView插件flutter_webview_plugin",
+                        style: TextStyle(
+                            fontSize: 15.0, height: 1.5, letterSpacing: 1.2))),
                 Divider(
                   color: Colors.blue,
                 ),
                 Container(
                     alignment: Alignment.center,
                     margin: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 24.0),
-                    child: Text("侵权请联系删除，谢谢！",
+                    child: Text("仅供学习，禁止商用\n侵权请联系删除，谢谢!",
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 15.0,
                             height: 1.5,
@@ -111,5 +127,11 @@ class About extends StatelessWidget {
                             color: Colors.blue)))
               ])),
         )));
+  }
+
+  _navToWeb(context, String title, String url) {
+    Navigator.of(context).push(new MaterialPageRoute(builder: (context) {
+      return new Web(title, url);
+    }));
   }
 }
