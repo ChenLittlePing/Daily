@@ -1,6 +1,6 @@
 ## Daily/每日图文
 
-A Flutter App for looking up photos and articles.
+A Flutter App for reading awesome photos and articles.
 
 《每日图文》是一个使用Google Flutter平台开发的跨平台App，可以在Android和iOS平台上运行。
 
