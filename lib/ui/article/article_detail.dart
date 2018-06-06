@@ -2,9 +2,9 @@ import 'package:daily/bean/article.dart';
 import 'package:flutter/material.dart';
 
 class ArticleDetail extends StatefulWidget {
-  Article article;
+  final Article _article;
 
-  ArticleDetail(this.article);
+  ArticleDetail(this._article);
 
   @override
   State<StatefulWidget> createState() {
@@ -17,7 +17,7 @@ class ArticleDetailState extends State<ArticleDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.article.title),
+          title: Text(widget._article.title),
           centerTitle: true,
         ),
         body: ListView.builder(
@@ -26,7 +26,7 @@ class ArticleDetailState extends State<ArticleDetail> {
               if (i == 0) {
                 return Container(
                     margin: EdgeInsets.all(8.0),
-                    child: Text(widget.article.title,
+                    child: Text(widget._article.title,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             height: 2.0,
@@ -36,7 +36,7 @@ class ArticleDetailState extends State<ArticleDetail> {
               } else if (i == 1) {
                 return Container(
                     margin: EdgeInsets.all(8.0),
-                    child: Text("文 / " + widget.article.author,
+                    child: Text("文 / " + widget._article.author,
                         style: TextStyle(
                             height: 1.2,
                             fontSize: 16.0,
@@ -51,7 +51,7 @@ class ArticleDetailState extends State<ArticleDetail> {
   }
 
   _getParagraph() {
-    var pgps = widget.article.content.split("</p>");
+    var pgps = widget._article.content.split("</p>");
     var texts = <TextSpan>[];
     for (var text in pgps) {
       texts.add(TextSpan(

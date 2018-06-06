@@ -12,8 +12,8 @@ class ArticlePage extends StatefulWidget {
 
 class _ArticleState extends State<ArticlePage> {
   var _items = <Article>[];
-  var myContext;
-  String title = "每日文章";
+  var _myContext;
+  String _title = "每日文章";
 
   @override
   void initState() {
@@ -25,11 +25,11 @@ class _ArticleState extends State<ArticlePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(title),
+          title: Text(_title),
           centerTitle: true,
         ),
         body: Builder(builder: (BuildContext context) {
-          myContext = context;
+          _myContext = context;
           return PageView.builder(
               itemCount: 5 + _items.length,
               onPageChanged: _onViewChange,
@@ -73,7 +73,7 @@ class _ArticleState extends State<ArticlePage> {
 
   _onViewChange(int i) {
     setState(() {
-      title = Date.getDate(i, "yyy-MM-dd");
+      _title = Date.getDate(i, "yyy-MM-dd");
     });
     if (i >= _items.length) {
       _getArticle(i);
@@ -91,7 +91,7 @@ class _ArticleState extends State<ArticlePage> {
       });
     }, (error) {
       Scaffold
-          .of(myContext)
+          .of(_myContext)
           .showSnackBar(new SnackBar(content: new Text(error)));
     });
   }

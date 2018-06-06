@@ -3,15 +3,11 @@ import 'package:daily/bean/tc_item.dart';
 import 'package:flutter/material.dart';
 
 class PhotoPPT extends StatefulWidget {
-  final photos = <TCItem>[];
-  var index = 0;
-  var pageIndex = 0;
+  final List<TCItem> _photos;
+  final int _index;
+  final int _pageIndex;
 
-  PhotoPPT(photos, pageIndex, index) {
-    this.photos.addAll(photos);
-    this.index = index;
-    this.pageIndex = pageIndex;
-  }
+  PhotoPPT(this._photos, this._pageIndex, this._index);
 
   @override
   State<StatefulWidget> createState() {
@@ -23,17 +19,17 @@ class PhotoPPTState extends State<PhotoPPT> {
   @override
   Widget build(BuildContext context) {
     return new PageView.builder(
-        controller: PageController(initialPage: widget.index),
-        itemCount: widget.photos.length,
+        controller: PageController(initialPage: widget._index),
+        itemCount: widget._photos.length,
         itemBuilder: (context, i) {
           return GestureDetector(
               onTap: () {
                 Navigator.pop(context);
               },
               child: Hero(
-                tag: "tag-" + widget.pageIndex.toString() + "-" + i.toString(),
+                tag: "tag-" + widget._pageIndex.toString() + "-" + i.toString(),
                 child: new CachedNetworkImage(
-                  imageUrl: widget.photos[i].url,
+                  imageUrl: widget._photos[i].url,
                   placeholder: Container(
                     child: Image.asset("images/ic-pic-loading.png"),
                   ),

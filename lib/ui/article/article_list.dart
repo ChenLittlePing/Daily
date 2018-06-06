@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+
 import 'package:daily/bean/article.dart';
 import 'package:daily/net/api_article/article_api.dart';
 import 'package:daily/ui/article/article_detail.dart';
@@ -12,7 +12,7 @@ class ArticleList extends StatefulWidget {
 }
 
 class ArticleListState extends State<ArticleList> {
-  var myContext;
+  var _myContext;
   var _items = <Article>[];
 
   @override
@@ -29,7 +29,7 @@ class ArticleListState extends State<ArticleList> {
           centerTitle: true,
         ),
         body: new Builder(builder: (BuildContext context) {
-          myContext = context;
+          _myContext = context;
           return ListView.builder(
               itemCount: _items.length,
               itemBuilder: (context, i) {
@@ -80,7 +80,7 @@ class ArticleListState extends State<ArticleList> {
         _items.add(item);
       });
     }, (error) {
-      Scaffold.of(myContext).showSnackBar(
+      Scaffold.of(_myContext).showSnackBar(
           new SnackBar(content: new Text(error)));
     });
   }

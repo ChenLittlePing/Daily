@@ -4,13 +4,10 @@ import 'package:daily/ui/photo/photo_ppt.dart';
 import 'package:flutter/material.dart';
 
 class PhotoList extends StatefulWidget {
-  final photos = <TCItem>[];
-  var pageIndex = 0;
+  final List<TCItem> _photos;
+  final int _pageIndex;
 
-  PhotoList(photos, pageIndex) {
-    this.photos.addAll(photos);
-    this.pageIndex = pageIndex;
-  }
+  PhotoList(this._photos, this._pageIndex);
 
   @override
   State<StatefulWidget> createState() {
@@ -23,7 +20,7 @@ class PhotoListState extends State<PhotoList> {
   Widget build(BuildContext context) {
     return new Scaffold(
         appBar: new AppBar(
-          title: new Text(widget.photos[0].title != null? widget.photos[0].title : "图片列表"),
+          title: new Text(widget._photos[0].title != null? widget._photos[0].title : "图片列表"),
           centerTitle: true,
         ),
         body: new GridView.count(
@@ -31,15 +28,15 @@ class PhotoListState extends State<PhotoList> {
             // horizontal, this would produce 2 rows.
             crossAxisCount: 2,
             // Generate 100 Widgets that display their index in the List
-            children: new List.generate(widget.photos.length, (index) {
+            children: new List.generate(widget._photos.length, (index) {
               return new GestureDetector(
                   onTap: () {
                     _next(index);
                   },
                   child: Hero(
-                    tag: "tag-" + widget.pageIndex.toString() + "-" + index.toString(),
+                    tag: "tag-" + widget._pageIndex.toString() + "-" + index.toString(),
                     child: CachedNetworkImage(
-                      imageUrl: widget.photos[index].url,
+                      imageUrl: widget._photos[index].url,
                       placeholder: Container(
                         child: Image.asset("images/ic-pic-loading.png"),
                       ),
@@ -52,7 +49,7 @@ class PhotoListState extends State<PhotoList> {
 
   void _next(index) {
     Navigator.of(context).push(new MaterialPageRoute(builder: (context) {
-      return new PhotoPPT(widget.photos, widget.pageIndex, index);
+      return new PhotoPPT(widget._photos, widget._pageIndex, index);
     }));
   }
 }

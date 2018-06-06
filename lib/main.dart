@@ -160,7 +160,7 @@ class _HomePageState extends State<_HomePage> {
   }
 
   Future<Null> _getNews(page, postId) async {
-    if (page > 1 && postId == null) return;
+    if (page > 1 && postId == null) return null;
     this.curPage = page;
     TCApi().getNew(page, postId, _getNewSuccess, _getNewFail);
     return null;
