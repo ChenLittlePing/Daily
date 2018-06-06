@@ -22,12 +22,15 @@ class PhotoListState extends State<PhotoList> {
         appBar: new AppBar(
           title: new Text(widget._photos[0].title != null? widget._photos[0].title : "图片列表"),
           centerTitle: true,
+          elevation: Theme.of(context).platform == TargetPlatform.iOS? 0.0 : 4.0
         ),
         body: new GridView.count(
             // Create a grid with 2 columns. If you change the scrollDirection to
             // horizontal, this would produce 2 rows.
             crossAxisCount: 2,
-            // Generate 100 Widgets that display their index in the List
+            padding: const EdgeInsets.all(2.0),
+            mainAxisSpacing: 2.0,
+            crossAxisSpacing: 2.0,
             children: new List.generate(widget._photos.length, (index) {
               return new GestureDetector(
                   onTap: () {

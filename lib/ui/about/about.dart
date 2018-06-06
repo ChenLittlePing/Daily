@@ -5,7 +5,11 @@ class About extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: new AppBar(title: Text("关于"), centerTitle: true),
+        appBar: new AppBar(
+            title: Text("关于"),
+            centerTitle: true,
+            elevation:
+                Theme.of(context).platform == TargetPlatform.iOS ? 0.0 : 4.0),
         body: SingleChildScrollView(
             child: Container(
           margin: EdgeInsets.all(32.0),

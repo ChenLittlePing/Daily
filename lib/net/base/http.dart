@@ -5,14 +5,13 @@ import 'package:dio/dio.dart';
 ///<p>配置基本的请求信息，以及基础的请求功能方法
 ///<p>正在的请求类需要继承该类，并实现[initOption]方法，进行参数配置
 abstract class Http {
-
-  static Options _options = Options(
+  Options _options = Options(
       baseUrl: "",
       connectTimeout: 5000,
       receiveTimeout: 3000
   );
 
-  static Dio _dio;
+  Dio _dio;
 
   Http() {
     initOption(_options);
@@ -25,15 +24,13 @@ abstract class Http {
     return _dio;
   }
 
-  void initOption(Options options) {
-
-  }
+  void initOption(Options options) {}
 
   void get(String endpoint, var params, Success success, Fail fail) async {
     try {
       Response response = await getDio().get(endpoint, data: params);
       handleData(success, response.data);
-    } on DioError catch(e) {
+    } on DioError catch (e) {
       handleError(fail, e);
     }
   }
@@ -42,7 +39,7 @@ abstract class Http {
     try {
       Response response = await getDio().post(endpoint, data: data);
       handleData(success, response.data);
-    } on DioError catch(e) {
+    } on DioError catch (e) {
       handleError(fail, e);
     }
   }
@@ -51,7 +48,7 @@ abstract class Http {
     try {
       Response response = await getDio().get(endpoint);
       handleData(success, response.data);
-    } on DioError catch(e) {
+    } on DioError catch (e) {
       handleError(fail, e);
     }
   }
@@ -60,7 +57,7 @@ abstract class Http {
     try {
       Response response = await getDio().post(endpoint);
       handleData(success, response.data);
-    } on DioError catch(e) {
+    } on DioError catch (e) {
       handleError(fail, e);
     }
   }
@@ -73,7 +70,7 @@ abstract class Http {
 
   void handleError(cb, DioError e) {
     if (cb == null || !(cb is Function)) return;
-    if(e.response != null) {
+    if (e.response != null) {
       cb("服务器异常", e.response.statusCode);
     } else {
       switch (e.type) {

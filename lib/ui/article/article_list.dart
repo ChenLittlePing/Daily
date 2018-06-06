@@ -27,6 +27,7 @@ class ArticleListState extends State<ArticleList> {
         appBar: new AppBar(
           title: new Text("每日文章"),
           centerTitle: true,
+          elevation: Theme.of(context).platform == TargetPlatform.iOS? 0.0 : 4.0
         ),
         body: new Builder(builder: (BuildContext context) {
           _myContext = context;

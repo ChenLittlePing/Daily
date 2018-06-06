@@ -19,6 +19,7 @@ class ArticleDetailState extends State<ArticleDetail> {
         appBar: AppBar(
           title: Text(widget._article.title),
           centerTitle: true,
+          elevation: Theme.of(context).platform == TargetPlatform.iOS? 0.0 : 4.0
         ),
         body: ListView.builder(
             itemCount: 3,

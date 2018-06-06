@@ -27,6 +27,7 @@ class _ArticleState extends State<ArticlePage> {
         appBar: AppBar(
           title: Text(_title),
           centerTitle: true,
+          elevation: Theme.of(context).platform == TargetPlatform.iOS? 0.0 : 4.0
         ),
         body: Builder(builder: (BuildContext context) {
           _myContext = context;

@@ -7,6 +7,7 @@ import 'package:daily/ui/article/article_page.dart';
 import 'package:daily/ui/photo/photo_ppt.dart';
 import 'package:daily/ui/photo/photo_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 void main() => runApp(new MyApp());
@@ -96,6 +97,7 @@ class _HomePageState extends State<_HomePage> {
       appBar: new AppBar(
         title: new Text("热门图片"),
         centerTitle: true,
+        elevation: Theme.of(context).platform == TargetPlatform.iOS? 0.0 : 4.0
       ),
       body: new RefreshIndicator(
         onRefresh: () {
@@ -116,9 +118,8 @@ class _HomePageState extends State<_HomePage> {
                   },
                   child: Hero(
                     tag: "tag-" + index.toString() + "-0",
-                    child: Container(
-                        color: Colors.grey,
-                        margin: const EdgeInsets.all(2.0),
+                    child: Card(
+                        margin: const EdgeInsets.fromLTRB(8.0, 4.0, 8.0 , 4.0),
                         child: AspectRatio(
                             aspectRatio: 1.0,
                             child: Stack(
