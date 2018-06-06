@@ -208,7 +208,7 @@ class _HomePageState extends State<_HomePage> {
     });
   }
 
-  void _getNewFail(error) {
+  void _getNewFail(error, code) {
     if (scaffoldContext != null) {
       Scaffold
           .of(scaffoldContext)

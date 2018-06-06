@@ -79,7 +79,7 @@ class ArticleListState extends State<ArticleList> {
       setState(() {
         _items.add(item);
       });
-    }, (error) {
+    }, (error, code) {
       Scaffold.of(_myContext).showSnackBar(
           new SnackBar(content: new Text(error)));
     });

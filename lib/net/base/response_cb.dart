@@ -1,3 +1,3 @@
 
 typedef void Success(data);
-typedef void Fail(data);
+typedef void Fail(String error, int code);

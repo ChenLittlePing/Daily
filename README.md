@@ -13,6 +13,8 @@ https://github.com/ChenLittlePing/-Api
 ## 使用的组件：
 
 - Scaffold 
+- RefreshIndicator
+- GestureDetector
 - Container
 - CenterListView
 - GridView

@@ -4,9 +4,11 @@ class Article {
   String author;
   String digest;
   String content;
+  bool success;
 
   Article(this.title,
       this.author,
       this.digest,
-      this.content);
+      this.content,
+      [this.success = true]);
 }

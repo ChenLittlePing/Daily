@@ -11,7 +11,7 @@ class ArticlePage extends StatefulWidget {
 }
 
 class _ArticleState extends State<ArticlePage> {
-  var _items = <Article>[];
+  var _items = Map<String, Article>();
   var _myContext;
   String _title = "每日文章";
 
@@ -37,6 +37,11 @@ class _ArticleState extends State<ArticlePage> {
                 if (_items.length <= page) {
                   return new Center(child: Text("正在加载..."));
                 }
+
+                Article item = _items[_getDate(page)];
+                if (item.content == "暂未更新") {
+                  return Center(child: Text("暂未更新"));
+                }
                 return new Container(
                     child: ListView.builder(
                         itemCount: 3,
@@ -44,7 +49,7 @@ class _ArticleState extends State<ArticlePage> {
                           if (i == 0) {
                             return Container(
                                 margin: EdgeInsets.all(8.0),
-                                child: Text(_items[page].title,
+                                child: Text(item.title,
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                         height: 2.0,
@@ -54,7 +59,7 @@ class _ArticleState extends State<ArticlePage> {
                           } else if (i == 1) {
                             return Container(
                                 margin: EdgeInsets.all(8.0),
-                                child: Text("文 / " + _items[page].author,
+                                child: Text("文 / " + item.author,
                                     style: TextStyle(
                                         height: 1.2,
                                         fontSize: 16.0,
@@ -65,34 +70,42 @@ class _ArticleState extends State<ArticlePage> {
                               margin: EdgeInsets.all(8.0),
                               child: RichText(
                                   text: new TextSpan(
-                                      children: _getParagraph(_items[page]))));
+                                      children: _getParagraph(item))));
                         }));
               });
         }));
   }
 
   _onViewChange(int i) {
+    String date = _getDate(i);
     setState(() {
-      _title = Date.getDate(i, "yyy-MM-dd");
+      _title = date;
     });
-    if (i >= _items.length) {
+    if (_items[date] == null || !_items[date].success) {
       _getArticle(i);
     }
   }
 
   void _getArticle(int offset) {
-    var date = Date.getDate(offset, "yyyMMdd");
+    var date = _getDate(offset);
 
     ArticleApi().getArticle(date, (data) {
       var d = data["data"];
       var item = Article(d["title"], d["author"], d["digest"], d["content"]);
       setState(() {
-        _items.add(item);
+        _items.putIfAbsent(d["date"]["curr"], () => item);
       });
-    }, (error) {
-      Scaffold
-          .of(_myContext)
-          .showSnackBar(new SnackBar(content: new Text(error)));
+    }, (error, code) {
+      if (code == 404) {
+        var item = Article("", "", "", "暂未更新", false);
+        setState(() {
+          _items.putIfAbsent(date, () => item);
+        });
+      } else {
+        Scaffold
+            .of(_myContext)
+            .showSnackBar(new SnackBar(content: new Text(error)));
+      }
     });
   }
 
@@ -112,5 +125,9 @@ class _ArticleState extends State<ArticlePage> {
               color: Colors.black54)));
     }
     return texts;
+  }
+
+  _getDate(int offset) {
+    return Date.getDate(offset, "yyyMMdd");
   }
 }

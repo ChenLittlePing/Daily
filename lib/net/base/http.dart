@@ -74,23 +74,23 @@ abstract class Http {
   void handleError(cb, DioError e) {
     if (cb == null || !(cb is Function)) return;
     if(e.response != null) {
-      cb("服务器出错");
+      cb("服务器异常", e.response.statusCode);
     } else {
       switch (e.type) {
         case DioErrorType.DEFAULT:
-          cb("服务器出错");
+          cb("服务器异常", 0);
           break;
         case DioErrorType.CONNECT_TIMEOUT:
-          cb("网络连接超时");
+          cb("网络连接超时", 0);
           break;
         case DioErrorType.RECEIVE_TIMEOUT:
-          cb("网络连接超时");
+          cb("网络连接超时", 0);
           break;
         case DioErrorType.RESPONSE:
-          cb("网络异常");
+          cb("网络异常", 0);
           break;
         case DioErrorType.CANCEL:
-          cb("取消请求");
+          cb("取消请求", 0);
           break;
       }
     }
