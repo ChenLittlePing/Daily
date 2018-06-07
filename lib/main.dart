@@ -6,6 +6,7 @@ import 'package:daily/ui/about/about.dart';
 import 'package:daily/ui/article/article_page.dart';
 import 'package:daily/ui/photo/photo_ppt.dart';
 import 'package:daily/ui/photo/photo_list.dart';
+import 'package:daily/ui/speech/spech_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -84,6 +85,12 @@ class _HomePageState extends State<_HomePage> {
               title: Text("每日文章", style: TextStyle(fontSize: 16.0)),
               leading: Icon(Icons.chrome_reader_mode),
               onTap: _clickArticleList,
+            ),
+            Divider(),
+            ListTile(
+              title: Text("一席演讲", style: TextStyle(fontSize: 16.0)),
+              leading: Icon(Icons.speaker),
+              onTap: _clickSpeechList,
             ),
             Divider(),
             ListTile(
@@ -232,6 +239,11 @@ class _HomePageState extends State<_HomePage> {
   void _clickArticleList() {
     Navigator.pop(context);
     _navTo(ArticlePage());
+  }
+
+  void _clickSpeechList() {
+    Navigator.pop(context);
+    _navTo(SpeechList());
   }
 
   void _clickAbout() {

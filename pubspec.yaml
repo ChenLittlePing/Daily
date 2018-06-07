@@ -12,6 +12,7 @@ dependencies:
   cached_network_image: ^0.4.1
   intl: ^0.15.6
   flutter_webview_plugin: ^0.1.6
+  audioplayer: ^0.4.0
 
 dev_dependencies:
   flutter_test:
@@ -33,6 +34,9 @@ flutter:
   assets:
     - images/ic-pic-loading.png
     - images/ic-pic-article.gif
+    - images/ic-play.png
+    - images/ic-pause.png
+    - images/ic-playing.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

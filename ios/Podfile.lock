@@ -1,4 +1,6 @@
 PODS:
+  - audioplayer (0.0.1):
+    - Flutter
   - Flutter (1.0.0)
   - flutter_webview_plugin (0.0.1):
     - Flutter
@@ -8,12 +10,15 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
+  - audioplayer (from `.symlinks/plugins/audioplayer/ios`)
   - Flutter (from `.symlinks/flutter/ios`)
   - flutter_webview_plugin (from `.symlinks/plugins/flutter_webview_plugin/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
 
 EXTERNAL SOURCES:
+  audioplayer:
+    :path: ".symlinks/plugins/audioplayer/ios"
   Flutter:
     :path: ".symlinks/flutter/ios"
   flutter_webview_plugin:
@@ -24,6 +29,7 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/shared_preferences/ios"
 
 SPEC CHECKSUMS:
+  audioplayer: 3cc64e4f5f3e231c715c8923a9bc26a19dc5da3b
   Flutter: 9d0fac939486c9aba2809b7982dfdbb47a7b0296
   flutter_webview_plugin: 116575b48572029304775b768e9f15ebfc316274
   path_provider: 09407919825bfe3c2deae39453b7a5b44f467873
