@@ -6,6 +6,16 @@ A Flutter App for reading awesome photos and articles.
 
 ![每日图文](https://github.com/ChenLittlePing/Daily/blob/master/gif/demo.gif)
 
+## 功能：
+
+- [x] 查看美图
+- [x] 查看美文
+- [ ] 查看演讲
+   - [x] 演讲视频列表和语音播放
+   - [ ] 演讲语音播放状态显示，播放时间点拖放
+   - [ ] 演讲视频播放
+   - [ ] 演讲文稿显示
+
 ## Api来自：
 
 https://github.com/ChenLittlePing/-Api
@@ -29,6 +39,7 @@ https://github.com/ChenLittlePing/-Api
 - 图片显示缓存框架cached_network_image
 - 日期格式化工具intl
 - Webview插件flutter_webview_plugin
+- 音频播放插件audioplayer
 - ......
 
 ## 声明
