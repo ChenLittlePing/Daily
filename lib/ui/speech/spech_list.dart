@@ -132,12 +132,12 @@ class _SpeechListState extends State<SpeechList> {
       player.play(item.audioUrl).then((result) {
         if (result) {
           setState(() {
-            var it = _items[playingIndex];
-            if (it != null) {
+            if (playingIndex > -1) {
+              var it = _items[playingIndex];
               it.playing = false;
             }
             playingIndex = index;
-            _items[playingIndex].playing = true;
+            item.playing = true;
           });
         }
       });
@@ -145,7 +145,7 @@ class _SpeechListState extends State<SpeechList> {
       player.pause().then((result) {
         if (result) {
           setState(() {
-            _items[playingIndex].playing = false;
+            item.playing = false;
           });
         }
       });
