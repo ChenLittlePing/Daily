@@ -12,7 +12,7 @@ A Flutter App for reading awesome photos and articles.
 - [x] 查看美文
 - [ ] 查看演讲
    - [x] 演讲视频列表和语音播放
-   - [ ] 演讲语音播放状态显示，播放时间点拖放
+   - [x] 演讲语音播放状态显示，播放时间点拖放
    - [ ] 演讲视频播放
    - [ ] 演讲文稿显示
 
