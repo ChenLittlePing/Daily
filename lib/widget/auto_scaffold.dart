@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+///自动切换Android/iOS风格的标题栏布局
 class AutoScaffold extends Scaffold {
   AutoScaffold({BuildContext context, String title, Widget body})
       : super(

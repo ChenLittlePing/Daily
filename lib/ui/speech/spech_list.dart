@@ -13,20 +13,34 @@ class SpeechList extends StatefulWidget {
 }
 
 class _SpeechListState extends State<SpeechList> {
-  var _items = <SpeechIntro>[];
+  static var _items = <SpeechIntro>[];
 
   var _page = 1;
   var _max = 2;
 
-  var player = new APlayer();
+  var _player = new APlayer();
 
-  var playingIndex = -1;
+  static var _playingIndex = -1;
+
+  Duration _duration = Duration(), _position = Duration();
+
+  Timer _seekTimer;
 
   @override
   void initState() {
     super.initState();
+    _initPlayer();
+    if (_items.length == 0) {
+      _getSpeeches(1);
+    }
+  }
 
-    _getSpeeches(1);
+  _initPlayer() {
+    _player.setDurationHandler(_handlerDuration);
+    _player.setPositionHandler(_handlerPosition);
+    _player.setCompletionHandler(_handlerCompletion);
+    _duration = _player.getDuration();
+    _position = _player.getPosition();
   }
 
   @override
@@ -55,18 +69,67 @@ class _SpeechListState extends State<SpeechList> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      Stack(alignment: Alignment.center, children: <Widget>[
+                      Stack(alignment: Alignment.bottomCenter, children: <
+                          Widget>[
+                        Stack(alignment: Alignment.center, children: <Widget>[
+                          Container(
+                            foregroundDecoration:
+                                BoxDecoration(color: Colors.black45),
+                            child: CachedNetworkImage(
+                                imageUrl: item.picUrl,
+                                fit: BoxFit.cover,
+                                errorWidget: new Icon(Icons.error)),
+                          ),
+                          Image.asset(_playingIndex == index
+                              ? (item.playing
+                                  ? "images/ic-playing.png"
+                                  : "images/ic-pause.png")
+                              : "images/ic-play.png"),
+                        ]),
                         Container(
-                          foregroundDecoration:
-                              BoxDecoration(color: Colors.black45),
-                          child: CachedNetworkImage(
-                              imageUrl: item.picUrl,
-                              fit: BoxFit.cover,
-                              errorWidget: new Icon(Icons.error)),
-                        ),
-                        Image.asset(playingIndex == index
-                            ? (item.playing ? "images/ic-playing.png" : "images/ic-pause.png")
-                            : "images/ic-play.png"),
+                            color: Colors.black54,
+                            alignment: Alignment.center,
+                            child: Offstage(
+                                offstage: _playingIndex != index,
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Container(
+                                        width: 65.0,
+                                        child: Text(
+                                            _sec2hms(_position.inSeconds),
+                                            style: TextStyle(
+                                                color: Colors.white))),
+                                    SliderTheme(
+                                        data: SliderTheme.of(context).copyWith(
+                                            activeTrackColor: Colors.lightBlue,
+                                            inactiveTrackColor: Colors.white,
+                                            thumbColor: Colors.lightBlue,
+                                            overlayColor: Colors.white,
+                                            valueIndicatorColor: Colors.white,
+                                            valueIndicatorTextStyle:
+                                                TextStyle(color: Colors.black)),
+                                        child: Slider(
+                                          onChanged: (value) {
+                                            _delaySeek(value);
+                                          },
+                                          value: _position.inSeconds.toDouble(),
+                                          label: _sec2hms(_position.inSeconds),
+                                          min: 0.0,
+                                          max: _duration.inSeconds.toDouble(),
+                                          divisions: _duration.inSeconds > 0
+                                              ? _duration.inSeconds
+                                              : 1,
+                                        )),
+                                    Container(
+                                        width: 65.0,
+                                        child: Text(
+                                            _sec2hms(_duration.inSeconds),
+                                            style: TextStyle(
+                                                color: Colors.white))),
+                                  ],
+                                )))
                       ]),
                       Container(
                         margin: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 4.0),
@@ -129,20 +192,20 @@ class _SpeechListState extends State<SpeechList> {
 
   _clickItem(SpeechIntro item, index) {
     if (!item.playing) {
-      player.play(item.audioUrl).then((result) {
+      _player.play(item.audioUrl).then((result) {
         if (result) {
           setState(() {
-            if (playingIndex > -1) {
-              var it = _items[playingIndex];
+            if (_playingIndex > -1) {
+              var it = _items[_playingIndex];
               it.playing = false;
             }
-            playingIndex = index;
+            _playingIndex = index;
             item.playing = true;
           });
         }
       });
     } else {
-      player.pause().then((result) {
+      _player.pause().then((result) {
         if (result) {
           setState(() {
             item.playing = false;
@@ -150,5 +213,56 @@ class _SpeechListState extends State<SpeechList> {
         }
       });
     }
+  }
+
+  void _handlerDuration(Duration duration) {
+    setState(() {
+      _duration = duration;
+    });
+  }
+
+  void _handlerPosition(Duration duration) {
+    setState(() {
+      if (_seekTimer != null && _seekTimer.isActive) return;
+      _position = duration;
+    });
+  }
+
+  void _handlerCompletion() {
+    setState(() {
+      _items[_playingIndex].playing = false;
+      _playingIndex = -1;
+    });
+  }
+
+  String _sec2hms(int second) {
+    int hour = second ~/ 3600;
+    int min = (second - hour * 3600) ~/ 60;
+    int sec = second - hour * 3600 - min * 60;
+
+    String time = hour < 10 ? "0" + hour.toString() : hour.toString();
+    time += ":" + (min < 10 ? "0" + min.toString() : min.toString());
+    time += ":" + (sec < 10 ? "0" + sec.toString() : sec.toString());
+
+    return time;
+  }
+
+  void _delaySeek(double seconds) {
+    setState(() {
+      _position = Duration(seconds: seconds.toInt());
+    });
+    if (_seekTimer == null) {
+      _starSeekTimer(seconds);
+    } else {
+      _seekTimer.cancel();
+      _starSeekTimer(seconds);
+    }
+  }
+
+  void _starSeekTimer(double seconds) {
+    _seekTimer = Timer(Duration(seconds: 1),
+            () {
+          _player.seek(seconds);
+        });
   }
 }

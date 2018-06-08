@@ -89,23 +89,23 @@ class _HomePageState extends State<_HomePage> {
             Divider(),
             ListTile(
               title: Text("一席演讲", style: TextStyle(fontSize: 16.0)),
-              leading: Icon(Icons.speaker),
+              leading: Icon(Icons.video_library),
               onTap: _clickSpeechList,
             ),
             Divider(),
             ListTile(
               title: Text("关于", style: TextStyle(fontSize: 16.0)),
-              leading: Icon(Icons.account_balance),
+              leading: Icon(Icons.announcement),
               onTap: _clickAbout,
             ),
           ],
         ),
       ),
       appBar: new AppBar(
-        title: new Text("热门图片"),
-        centerTitle: true,
-        elevation: Theme.of(context).platform == TargetPlatform.iOS? 0.0 : 4.0
-      ),
+          title: new Text("热门图片"),
+          centerTitle: true,
+          elevation:
+              Theme.of(context).platform == TargetPlatform.iOS ? 0.0 : 4.0),
       body: new RefreshIndicator(
         onRefresh: () {
           return _getNews(1, null);
@@ -126,7 +126,7 @@ class _HomePageState extends State<_HomePage> {
                   child: Hero(
                     tag: "tag-" + index.toString() + "-0",
                     child: Card(
-                        margin: const EdgeInsets.fromLTRB(8.0, 4.0, 8.0 , 4.0),
+                        margin: const EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 4.0),
                         child: AspectRatio(
                             aspectRatio: 1.0,
                             child: Stack(
