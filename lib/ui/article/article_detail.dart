@@ -18,7 +18,7 @@ class ArticleDetailState extends State<ArticleDetail> {
     return Scaffold(
         appBar: AppBar(
           title: Text(widget._article.title),
-          centerTitle: true,
+          centerTitle: Theme.of(context).platform == TargetPlatform.iOS? true : false,
           elevation: Theme.of(context).platform == TargetPlatform.iOS? 0.0 : 4.0
         ),
         body: ListView.builder(

@@ -2,15 +2,15 @@
 class SpeechIntro {
   bool playing = false;
   int id;
-  String picUrl;
+  String cover;
   String audioUrl;
   String title;
   String content;
+  String category;
+  String date;
+  String city;
 
   Speaker speaker;
-
-  SpeechIntro(this.id, this.title, this.picUrl,
-      this.audioUrl, this.content, this.speaker);
 }
 
 class Speaker {

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:daily/bean/speech_intro.dart';
 import 'package:daily/net/api_yx/yx_api.dart';
+import 'package:daily/ui/speech/speech_video.dart';
 import 'package:daily/utils/media/audio/audio_player.dart';
 import 'package:daily/widget/auto_scaffold.dart';
 import 'package:flutter/material.dart';
@@ -13,15 +14,13 @@ class SpeechList extends StatefulWidget {
 }
 
 class _SpeechListState extends State<SpeechList> {
+  //静态持有，当退出重新进入时，数据和播放状态才能恢复
   static var _items = <SpeechIntro>[];
-
-  var _page = 1;
-  var _max = 2;
-
-  var _player = new APlayer();
-
+  static var _page = 1;
+  static var _max = 2;
   static var _playingIndex = -1;
 
+  var _player = new APlayer();
   Duration _duration = Duration(), _position = Duration();
 
   Timer _seekTimer;
@@ -35,7 +34,7 @@ class _SpeechListState extends State<SpeechList> {
     }
   }
 
-  _initPlayer() {
+  void _initPlayer() {
     _player.setDurationHandler(_handlerDuration);
     _player.setPositionHandler(_handlerPosition);
     _player.setCompletionHandler(_handlerCompletion);
@@ -61,7 +60,7 @@ class _SpeechListState extends State<SpeechList> {
             var item = _items[index];
             return GestureDetector(
               onTap: () {
-                _clickItem(item, index);
+                _clickItem(item);
               },
               child: Card(
                   margin: const EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 4.0),
@@ -76,15 +75,18 @@ class _SpeechListState extends State<SpeechList> {
                             foregroundDecoration:
                                 BoxDecoration(color: Colors.black45),
                             child: CachedNetworkImage(
-                                imageUrl: item.picUrl,
+                                imageUrl: item.cover,
                                 fit: BoxFit.cover,
                                 errorWidget: new Icon(Icons.error)),
                           ),
-                          Image.asset(_playingIndex == index
-                              ? (item.playing
-                                  ? "images/ic-playing.png"
-                                  : "images/ic-pause.png")
-                              : "images/ic-play.png"),
+                          GestureDetector(
+                            onTap: () {_play(item, index);},
+                            child: Image.asset(_playingIndex == index
+                                ? (item.playing
+                                ? "images/ic-playing.png"
+                                : "images/ic-pause.png")
+                                : "images/ic-play.png")
+                          )
                         ]),
                         Container(
                             color: Colors.black54,
@@ -167,19 +169,23 @@ class _SpeechListState extends State<SpeechList> {
     return null;
   }
 
-  _formatData(speeches) {
+  void _formatData(speeches) {
     var items = <SpeechIntro>[];
     for (var speech in speeches) {
       var speak = speech["speaker"];
       var speaker = Speaker(speak["type_speaker"], speak["intro"],
           speak["avatar"], speak["name"]);
-      var intro = SpeechIntro(
-          speech["id"],
-          speech["title"],
-          speech["video_cover"],
-          speech["audio"],
-          speech["titlelanguage"],
-          speaker);
+      var intro = SpeechIntro();
+
+      intro.id = speech["id"];
+      intro.title = speech["title"];
+      intro.cover = speech["video_cover"];
+      intro.audioUrl = speech["audio"];
+      intro.content = speech["titlelanguage"];
+      intro.date = speech["speechdate"];
+      intro.city = speech["speechcity"];
+      intro.category = speech["speechcategory"];
+      intro.speaker = speaker;
 
       items.add(intro);
     }
@@ -190,7 +196,13 @@ class _SpeechListState extends State<SpeechList> {
     });
   }
 
-  _clickItem(SpeechIntro item, index) {
+  void _clickItem(SpeechIntro item) {
+    Navigator.of(context).push(new MaterialPageRoute(builder: (context){
+      return SpeechVideo(item);
+    }));
+  }
+
+  void _play(SpeechIntro item, index) {
     if (!item.playing) {
       _player.play(item.audioUrl).then((result) {
         if (result) {

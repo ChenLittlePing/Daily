@@ -10,9 +10,12 @@ dependencies:
   cupertino_icons: ^0.1.2
   dio: ^0.0.13
   cached_network_image: ^0.4.1
-  intl: ^0.15.6
+  intl: ^0.15.6 # date format util
   flutter_webview_plugin: ^0.1.6
   audioplayer: ^0.4.0
+  chewie: ^0.5.0 # video player
+  flutter_html_view: ^0.5.2
+  screen: ^0.0.3
 
 dev_dependencies:
   flutter_test:

@@ -10,7 +10,14 @@ class YxApi {
       "pageSize": 8
     };
 
-    String endPoint = "/speechs";
-    YxRequest.obtain().get(endPoint, params, success, fail);
+    YxRequest.obtain().get("/speechs", params, success, fail);
+  }
+
+  void getSpeechDetail(speechId, Success success, Fail fail) {
+    var params = {
+      "speech_id": speechId
+    };
+
+    YxRequest.obtain().get("/speech", params, success, fail);
   }
 }

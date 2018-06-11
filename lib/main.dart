@@ -6,7 +6,7 @@ import 'package:daily/ui/about/about.dart';
 import 'package:daily/ui/article/article_page.dart';
 import 'package:daily/ui/photo/photo_ppt.dart';
 import 'package:daily/ui/photo/photo_list.dart';
-import 'package:daily/ui/speech/spech_list.dart';
+import 'package:daily/ui/speech/speech_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:cached_network_image/cached_network_image.dart';
